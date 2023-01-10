@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  app:
+    build: .
+    entrypoint: .docker/entrypoint.sh
+    container_name: bis-2-bis-app
+    ports:
+      - "3000:3000"
+    volumes:
+        - .:/home/node/app
+    depends_on:
+      - db
+
+  db:
+    build: .docker/mongodb
+    container_name: bis-2-bis-db
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - .docker/mongodb/data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
