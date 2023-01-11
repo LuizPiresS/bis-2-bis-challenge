@@ -73,8 +73,15 @@ export class UniversitiesService implements OnModuleInit {
     return this.universityModel.findOne({ _id: id });
   }
 
-  update(id: number, updateUniversityDto: UpdateUniversityDto) {
-    return `This action updates a #${id} university`;
+  async update(id: string, updateUniversityDto: UpdateUniversityDto) {
+    const data = await this.universityModel
+      .findByIdAndUpdate(id, updateUniversityDto)
+      .exec();
+    return {
+      urls: data.web_pages,
+      name: data.name,
+      domains: data.domains,
+    };
   }
 
   remove(id: number) {

@@ -1,8 +1,35 @@
 ### FINDALL
-GET http://localhost:3000/universities?country=Brazil&page=3
+GET http://localhost:3000/universities?country=Brazil&page=1
 Accept: application/json
 
 
 ### FIND BY ID
 GET http://localhost:3000/universities/63bedfcde7d413af9bb352a6
 Accept: application/json
+
+
+### CREATE UNIVERSITY
+POST http://localhost:3000/universities
+Content-Type: application/json
+
+{
+  "web_pages": ["https://teste.com", "https://teste2.com"],
+  "state_province": "RS",
+  "alpha_two_code": "BR",
+  "country": "Brazil",
+  "domains": ["teste.com", "teste2.com"],
+  "name": "Teste 123"
+}
+
+### UPDATE UNIVERSITY
+PUT http://localhost:3000/universities/63bf0e8b8718e92350970571
+Content-Type: application/json
+
+{
+  "web_pages": ["https://teste3.com", "https://teste4.com"],
+  "state_province": "PR",
+  "alpha_two_code": "BR",
+  "country": "Brazil",
+  "domains": ["teste1.com", "teste3.com"],
+  "name": "Teste 1234"
+}

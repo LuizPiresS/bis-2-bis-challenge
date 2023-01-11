@@ -3,7 +3,7 @@ import {
   Get,
   Post,
   Body,
-  Patch,
+  Put,
   Param,
   Delete,
   Query,
@@ -32,12 +32,12 @@ export class UniversitiesController {
     return this.universitiesService.findById(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(
     @Param('id') id: string,
     @Body() updateUniversityDto: UpdateUniversityDto,
   ) {
-    return this.universitiesService.update(+id, updateUniversityDto);
+    return this.universitiesService.update(id, updateUniversityDto);
   }
 
   @Delete(':id')
