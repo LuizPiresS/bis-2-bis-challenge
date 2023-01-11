@@ -53,8 +53,8 @@ export class UniversitiesService implements OnModuleInit {
     };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} university`;
+  findById(id: string) {
+    return this.universityModel.findOne({ _id: id });
   }
 
   update(id: number, updateUniversityDto: UpdateUniversityDto) {

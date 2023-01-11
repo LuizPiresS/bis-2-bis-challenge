@@ -1,3 +1,8 @@
 ### FINDALL
 GET http://localhost:3000/universities?country=Brazil&page=3
 Accept: application/json
+
+
+### FIND BY ID
+GET http://localhost:3000/universities/63bedfcde7d413af9bb352a6
+Accept: application/json

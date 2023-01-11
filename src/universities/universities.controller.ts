@@ -29,7 +29,7 @@ export class UniversitiesController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.universitiesService.findOne(+id);
+    return this.universitiesService.findById(id);
   }
 
   @Patch(':id')
