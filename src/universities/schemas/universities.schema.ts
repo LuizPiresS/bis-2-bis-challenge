@@ -1,15 +1,26 @@
-import { Document } from 'mongoose';
+import { Document, now } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 export type UniversitieDocument = Universitie & Document;
 
-@Schema()
+@Schema({
+  toJSON: {
+    transform: (doc, ret) => {
+      delete ret.__v;
+      delete ret.web_pages;
+      delete ret.alpha_two_code;
+      delete ret.domains;
+      delete ret.create_at;
+      delete ret.update_at;
+    },
+  },
+})
 export class Universitie {
   @Prop()
   web_pages: string[];
 
   @Prop()
-  state_province: string;
+  state_province: string | null;
 
   @Prop()
   alpha_two_code: string;
@@ -22,6 +33,11 @@ export class Universitie {
 
   @Prop()
   name: string;
-}
 
+  @Prop({ default: now() })
+  create_at: Date;
+
+  @Prop({ default: now() })
+  update_at: Date;
+}
 export const UniversitieSchema = SchemaFactory.createForClass(Universitie);

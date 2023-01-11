@@ -34,21 +34,25 @@ export class UniversitiesService implements OnModuleInit {
   }
 
   public async findAll(filters: FiltersUniversityDto) {
-    const pageN: number = +filters.page || 1;
+    if (!filters.page) {
+      const data = await this.universityModel.find({ ...filters });
+      return {
+        page: `all records of ${filters.country}`,
+        total: data.length,
+        data,
+      };
+    }
+    const page: number = +filters.page || 1;
     const limit = 20;
-    const total = await this.universityModel
-      .count({ ...filters })
-      .skip((pageN - 1) * limit)
-      .limit(limit);
 
     const universities = await this.universityModel
       .find({ ...filters })
-      .skip((pageN - 1) * limit)
+      .skip((page - 1) * limit)
       .limit(limit);
 
     return {
-      page: pageN,
-      total: total,
+      page: page,
+      total: universities.length,
       data: universities,
     };
   }
