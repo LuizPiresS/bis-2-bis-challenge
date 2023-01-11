@@ -46,16 +46,11 @@ export class UniversitiesService implements OnModuleInit {
       .skip((pageN - 1) * limit)
       .limit(limit);
 
-    console.log(filters.page, 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
     return {
       page: pageN,
       total: total,
       data: universities,
     };
-    // const data = await universities
-    //   .skip((pageN - 1) * limit)
-    //   .limit(limit)
-    //   .exec();
   }
 
   findOne(id: number) {
