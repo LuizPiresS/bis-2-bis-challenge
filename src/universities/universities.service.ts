@@ -84,8 +84,8 @@ export class UniversitiesService implements OnModuleInit {
     };
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} university`;
+  async remove(id: string) {
+    await this.universityModel.deleteOne({ _id: id }).exec();
   }
 
   public async getuniversityData(): Promise<any> {

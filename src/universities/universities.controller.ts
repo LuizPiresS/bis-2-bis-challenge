@@ -42,6 +42,6 @@ export class UniversitiesController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.universitiesService.remove(+id);
+    return this.universitiesService.remove(id);
   }
 }

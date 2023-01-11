@@ -33,3 +33,7 @@ Content-Type: application/json
   "domains": ["teste1.com", "teste3.com"],
   "name": "Teste 1234"
 }
+
+### DELETE BY ID
+DELETE http://localhost:3000/universities/63bf0e8b8718e92350970571
+Accept: application/json
