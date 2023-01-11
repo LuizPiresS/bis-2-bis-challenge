@@ -1,0 +1,3 @@
+### FINDALL
+GET http://localhost:3000/universities?country=Brazil&page=3
+Accept: application/json
