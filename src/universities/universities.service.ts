@@ -11,6 +11,7 @@ import {
   UniversitieDocument,
 } from './schemas/universities.schema';
 import { Model } from 'mongoose';
+import { UniversityAlreadyExistsError } from './errors/types/university-already-exists.error';
 
 @Injectable()
 export class UniversitiesService implements OnModuleInit {
@@ -23,14 +24,25 @@ export class UniversitiesService implements OnModuleInit {
   public async onModuleInit(): Promise<void> {
     const count = await this.universityModel.count();
 
-    if (count === 0) {
+    if (!count) {
       const universities = await this.getuniversityData();
       await this.create(universities);
+      console.log('Data has been successfully migrated');
     }
   }
 
   public async create(createUniversityDto: CreateUniversityDto) {
-    await this.universityModel.create(createUniversityDto);
+    const universityExists = await this.universityModel.count({
+      name: createUniversityDto.name,
+      country: createUniversityDto.country,
+      state_province: createUniversityDto.state_province,
+    });
+
+    if (!universityExists) {
+      return await this.universityModel.create(createUniversityDto);
+    }
+
+    throw new UniversityAlreadyExistsError('University already registered');
   }
 
   public async findAll(filters: FiltersUniversityDto) {
