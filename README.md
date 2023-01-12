@@ -13,7 +13,7 @@ $ git clone https://github.com/LuizPiresS/bis-2-bis-challenge.git
 
 Rodar a APP (Não precisa de mais nenhum comando para rodar a APP )
 ```bash
-$ docker-compose up -d
+$ docker-compose down && docker-compose up
 ```
 
 ## Exemplos de requests
