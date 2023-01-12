@@ -12,12 +12,13 @@ import { UniversitiesService } from './universities.service';
 import { CreateUniversityDto } from './dto/create-university.dto';
 import { UpdateUniversityDto } from './dto/update-university.dto';
 import { FiltersUniversityDto } from './dto/filters-university.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('universities')
 export class UniversitiesController {
   constructor(private readonly universitiesService: UniversitiesService) {}
 
+  @ApiResponse({ status: 400, description: 'University already registered' })
   @ApiTags('Universities')
   @Post()
   create(@Body() createUniversityDto: CreateUniversityDto) {
