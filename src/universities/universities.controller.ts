@@ -12,26 +12,31 @@ import { UniversitiesService } from './universities.service';
 import { CreateUniversityDto } from './dto/create-university.dto';
 import { UpdateUniversityDto } from './dto/update-university.dto';
 import { FiltersUniversityDto } from './dto/filters-university.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('universities')
 export class UniversitiesController {
   constructor(private readonly universitiesService: UniversitiesService) {}
 
+  @ApiTags('Universities')
   @Post()
   create(@Body() createUniversityDto: CreateUniversityDto) {
     return this.universitiesService.create(createUniversityDto);
   }
 
+  @ApiTags('Universities')
   @Get()
   findAll(@Query() filters: FiltersUniversityDto) {
     return this.universitiesService.findAll(filters);
   }
 
+  @ApiTags('Universities')
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.universitiesService.findById(id);
   }
 
+  @ApiTags('Universities')
   @Put(':id')
   update(
     @Param('id') id: string,
@@ -40,6 +45,7 @@ export class UniversitiesController {
     return this.universitiesService.update(id, updateUniversityDto);
   }
 
+  @ApiTags('Universities')
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.universitiesService.remove(id);

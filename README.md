@@ -19,6 +19,8 @@ $ docker-compose down && docker-compose up
 ## Exemplos de requests
 >./requests/university
 
+## API documentation
+>[Documentation Link](http://localhost:3000/api)
 ## Test
 
 ```bash
