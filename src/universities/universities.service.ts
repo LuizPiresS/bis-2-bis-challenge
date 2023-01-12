@@ -6,10 +6,7 @@ import { UpdateUniversityDto } from './dto/update-university.dto';
 
 import { HttpService } from '@nestjs/axios';
 import { InjectModel } from '@nestjs/mongoose';
-import {
-  Universitie,
-  UniversitieDocument,
-} from './schemas/universities.schema';
+import { University, UniversityDocument } from './schemas/universities.schema';
 import { Model } from 'mongoose';
 import { UniversityAlreadyExistsError } from './errors/types/university-already-exists.error';
 import { UniversityNotFoundError } from './errors/types/university-not-found.error';
@@ -17,8 +14,8 @@ import { UniversityNotFoundError } from './errors/types/university-not-found.err
 @Injectable()
 export class UniversitiesService implements OnModuleInit {
   constructor(
-    @InjectModel(Universitie.name)
-    private universityModel: Model<UniversitieDocument>,
+    @InjectModel(University.name)
+    private universityModel: Model<UniversityDocument>,
     private readonly httpService: HttpService,
   ) {}
 

@@ -1,7 +1,7 @@
 import { Document, now } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-export type UniversitieDocument = Universitie & Document;
+export type UniversityDocument = University & Document;
 
 @Schema({
   toJSON: {
@@ -15,7 +15,7 @@ export type UniversitieDocument = Universitie & Document;
     },
   },
 })
-export class Universitie {
+export class University {
   @Prop()
   web_pages: string[];
 
@@ -40,4 +40,4 @@ export class Universitie {
   @Prop({ default: now() })
   update_at: Date;
 }
-export const UniversitieSchema = SchemaFactory.createForClass(Universitie);
+export const UniversitySchema = SchemaFactory.createForClass(University);
