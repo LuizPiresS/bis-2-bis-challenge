@@ -12,6 +12,7 @@ import {
 } from './schemas/universities.schema';
 import { Model } from 'mongoose';
 import { UniversityAlreadyExistsError } from './errors/types/university-already-exists.error';
+import { UniversityNotFoundError } from './errors/types/university-not-found.error';
 
 @Injectable()
 export class UniversitiesService implements OnModuleInit {
@@ -25,7 +26,7 @@ export class UniversitiesService implements OnModuleInit {
     const count = await this.universityModel.count();
 
     if (!count) {
-      const universities = await this.getuniversityData();
+      const universities = await this.getUniversityData();
       await this.create(universities);
       console.log('Data has been successfully migrated');
     }
@@ -70,25 +71,37 @@ export class UniversitiesService implements OnModuleInit {
   }
 
   findById(id: string) {
-    return this.universityModel.findOne({ _id: id });
+    if (this.isValidId(id)) {
+      return this.universityModel.findOne({ _id: id });
+    }
+
+    throw new UniversityNotFoundError('University not found');
   }
 
   async update(id: string, updateUniversityDto: UpdateUniversityDto) {
-    const data = await this.universityModel
-      .findByIdAndUpdate(id, updateUniversityDto)
-      .exec();
-    return {
-      urls: data.web_pages,
-      name: data.name,
-      domains: data.domains,
-    };
+    if (this.isValidId(id)) {
+      const data = await this.universityModel
+        .findByIdAndUpdate(id, updateUniversityDto)
+        .exec();
+      return {
+        urls: data.web_pages,
+        name: data.name,
+        domains: data.domains,
+      };
+    }
+
+    throw new UniversityNotFoundError('University not found');
   }
 
   async remove(id: string) {
-    await this.universityModel.deleteOne({ _id: id }).exec();
+    if (this.isValidId(id)) {
+      return await this.universityModel.deleteOne({ _id: id }).exec();
+    }
+
+    throw new UniversityNotFoundError('University not found');
   }
 
-  public async getuniversityData(): Promise<any> {
+  private async getUniversityData(): Promise<any> {
     const countries = [
       'argentina',
       'brazil',
@@ -109,5 +122,9 @@ export class UniversitiesService implements OnModuleInit {
       universities.push(...response.data);
     }
     return universities;
+  }
+
+  private isValidId(id: string): boolean {
+    return !!id.match(/^[0-9a-fA-F]{24}$/);
   }
 }
