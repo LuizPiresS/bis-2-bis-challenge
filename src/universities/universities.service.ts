@@ -67,9 +67,12 @@ export class UniversitiesService implements OnModuleInit {
     };
   }
 
-  findById(id: string) {
+  async findById(id: string) {
     if (this.isValidId(id)) {
-      return this.universityModel.findOne({ _id: id });
+      const count = await this.universityModel.count({ _id: id });
+      if (count) {
+        return this.universityModel.findOne({ _id: id });
+      }
     }
 
     throw new UniversityNotFoundError('University not found');
@@ -80,11 +83,14 @@ export class UniversitiesService implements OnModuleInit {
       const data = await this.universityModel
         .findByIdAndUpdate(id, updateUniversityDto)
         .exec();
-      return {
-        urls: data.web_pages,
-        name: data.name,
-        domains: data.domains,
-      };
+
+      if (data) {
+        return {
+          urls: data.web_pages,
+          name: data.name,
+          domains: data.domains,
+        };
+      }
     }
 
     throw new UniversityNotFoundError('University not found');
@@ -92,7 +98,10 @@ export class UniversitiesService implements OnModuleInit {
 
   async remove(id: string) {
     if (this.isValidId(id)) {
-      return await this.universityModel.deleteOne({ _id: id }).exec();
+      const count = await this.universityModel.count({ _id: id });
+      if (count) {
+        return await this.universityModel.deleteOne({ _id: id }).exec();
+      }
     }
 
     throw new UniversityNotFoundError('University not found');
